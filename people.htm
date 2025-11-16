@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Yearbook</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+    </head>
+
+    <body> 
+        <div class="one" id="1">
+            <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> People <img src="pics/spark.gif" alt="woaaw"></h1>
+        </div>
+
+        <div class="a_toc"><a href="gander.htm"> ToC </a></div>
+        
+        <div class="scroll3">
+        <div id="people"></div>
+        <script type="text/javascript">
+          fetch('resource.csv') 
+                  .then(response => response.text())
+                  .then(csvdata => {
+                      const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+                      const container = document.getElementById('people');
+  
+                      lines.forEach(line => {
+                          const cols = line.split(',');
+                          if (cols.length < 6) return;
+  
+                          const id = cols[0].trim();
+                          const name = cols[1].trim();
+                          const dob = cols[2].replace(/"/g,'').trim();
+                          const clubs = cols[3].replace(/"/g,'').trim();
+                          const contact = cols[4].trim();
+                          const img = cols[5].trim();
+  
+                          const card = document.createElement('div');
+                          card.className = 'person-card';
+                          card.innerHTML = `
+                              <img src="pics/${img}">
+                              <h3>${name}</h3>
+                              <p>DoB: ${dob}</p>
+                              <p>Club: ${clubs || '-'}</p>
+                              <p>Contact: ${contact}</p>
+                              <br>
+                          `;
+                          container.appendChild(card); });
+                  })
+                  .catch(err => console.error('There is no resource file, ', err));
+        </script>
+        </div>
+    </body>        
+
+</html>

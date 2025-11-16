@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Yearbook</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        
+        <style>
+            #box {
+                position: fixed;
+                top: 200px;
+                right: 200px;
+                width: 15vw;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+		z-index:50;
+
+            }
+            #comin {
+                width: 100%;
+                height: 50px;
+                resize: none;
+		z-index:99;
+            }
+
+            #list {
+                width: 65%;
+                margin: 20px auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .postit {
+                background: #d0f5f2; /*post-it note*/
+                width: 90px;
+                min-height: 90px;
+                max-height: 90px;
+                overflow-y: auto;
+                word-wrap: break-word;
+                font-size: 14px;
+                position: relative;
+                overflow-y: auto;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+
+    <body>  
+        <div class="one" id="1">
+            <h1 class="idk"> <img src="pics/spark.gif" alt="woaaw"> Comments <img src="pics/spark.gif" alt="woaaw"> </h1>
+        </div>
+
+        <div class="a_toc"><a href="toc.htm"> ToC </a></div>
+        <div id="box">
+            <textarea id="comin" placeholder="Type a comment!"></textarea>
+            <button onclick="Comment()">Post it</button>
+        </div>
+
+        <div class="scroll3">
+            <div id="list"></div>
+
+        <script>
+            const comments = [
+                {name: "Mila", text: "They revamped school right after we graduated guys"},
+                {name: "Don", text: "Can’t believe its been a year. oof"},
+                {name: "Sofia", text: "Lets hang out! I miss you"},
+            ];
+
+            function renderComments() {
+                const container = document.getElementById('list');
+                container.innerHTML = '';
+                comments.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'postit';
+                    div.innerHTML = `<h4>${c.name}</h4>${c.text}`;
+                    container.appendChild(div);
+                });}
+
+            window.onload = renderComments;
+
+            function Comment() {
+                const input = document.getElementById('comin');
+                const text = input.value.trim();
+                if (!text) return;
+
+                comments.push({name: "You", text});
+                renderComments();
+                input.value = '';
+            }
+        </script>
+        </div>
+    </body>        
+</html>

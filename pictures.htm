@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Yearbook</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+    </head>
+
+    <body> 
+        <div class="one" id="1">
+            <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> All media <img src="pics/spark.gif" alt="woaaw"></h1>
+        </div>
+
+        <div class="a_toc"><a href="toc.htm"> ToC </a></div>
+        
+        <div class="scroll3">
+        <div id="pics"></div>
+        <script type="text/javascript">
+          fetch('pics.csv') 
+                  .then(response => response.text())
+                  .then(csvdata => {
+                      const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+                      const container = document.getElementById('pics');
+  
+                      lines.forEach(line => {
+			                    const cols = line.split(',');
+                          const name = cols[0].trim();
+                          const img = cols[1].trim();
+                          const card = document.createElement('div');
+                          card.className = 'person-card';
+                          card.innerHTML = `
+                              <br><br>
+                              <img src="pics/${img}"><br>
+                              <h3>${name}</h3>
+                              <br><br>
+                          `;
+                          container.appendChild(card); });
+                  })
+                  .catch(err => console.error('There is no pics csv file, ', err));
+        </script>
+        </div>
+    </body>        
+
+</html>

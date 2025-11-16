@@ -1,0 +1,139 @@
+<html>
+     <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Interactive Yearbook</title>
+          <link href="style.css" rel="stylesheet" type="text/css" media="all">
+      </head>
+
+      <body class="scrollable">
+          <div class="a_toc"><a href="toc.htm"> ToC </a></div>
+          <div class="one" id="1">
+               <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> Interactive Yearbook <img src="pics/spark.gif" alt="woaaw"></h1>
+          </div>
+
+          <div class="scroll3">
+               <form id="input1">
+                    Name: <input type="text" name="Name"><br>
+                    DoB: <input type="date" name="DoB"><br>
+                    Clubs: <input type="text" name="Clubs"><br>
+                    Contact: <input type="email" name="email"><br>
+                    Picture: <input type="file" accept=".png, .jpg, .webp"><br><br><br>
+                    Actual ''I/O'': <input type="file" name="file" id="file" accept=".csv" ><br>
+                    <input type="button" id="btnsubmit" value="Submit" onclick="readCSVFile();" >
+                    <input type="button" id="btnsubmit2" value="Download" onclick="writeCSVFile();" ><br>
+                    <input type="reset" value="Reset"><br>
+               </form>
+          </div>
+
+          <table id="tblcsvdata" border="1" style="border-collapse: collapse;">
+               <thead>
+                    <tr>
+                         <th>S.no</th>
+                         <th>Name</th>
+                         <th>DoB</th>
+                         <th>Clubs</th>
+                         <th>Contact</th>
+                         <th>Picture</th>
+                    </tr>
+               </thead>
+               <tbody>
+
+               </tbody>
+
+          </table>
+
+          <script type="text/javascript">
+          function readCSVFile(){
+               var files = document.querySelector('#file').files;
+               
+               if(files.length > 0 ){
+
+                    // Selected file
+                    var file = files[0];
+
+                    // FileReader Object
+                    var reader = new FileReader();
+
+                    // Read file as string 
+                    reader.readAsText(file);
+
+                    // Load event
+                    reader.onload = function(event) {
+
+                         // Read file data
+                         var csvdata = event.target.result;
+
+                         // Split by line break to gets rows Array
+                         var rowData = csvdata.split('\n');
+               alert(rowData);
+
+                         // <table > <tbody>
+                         var tbodyEl = document.getElementById('tblcsvdata').getElementsByTagName('tbody')[0];
+                         tbodyEl.innerHTML = rowData;
+
+                         // Loop on the row Array (change row=0 if you also want to read 1st row)
+                         for (var row = 1; row < rowData.length; row++) {
+
+                              // Insert a row at the end of table
+                              var newRow = tbodyEl.insertRow();
+
+                              // Split by comma (,) to get column Array
+                              rowColData = rowData[row].split(',');
+
+                              // Loop on the row column Array
+                              for (var col = 0; col < rowColData.length; col++) {
+
+                                   // Insert a cell at the end of the row
+                                   var newCell = newRow.insertCell();
+                                   newCell.innerHTML = rowColData[col];
+
+                              }
+
+                         }
+                    };
+
+               }else{
+                    alert("Please select a file.");
+               }
+
+          }
+
+          function writeCSVFile(){
+
+          //define the heading for each row of the data  
+          var csv = 'Name,Profession\n';  
+
+          //create CSV file data in an array  
+          var csvFileData = [  
+          ['Mila Milana', '2003-11-02', 'Music', 'mimi@gmail.com', 'mila.png'],  
+          ['Sofia Nimaevna', '2005-10-12', 'Photography', 'wewe@gmail.com', 'sofi.png'],  
+          ['Don Dorjiev', '2004-03-30', 'Theater', 'door@gmail.com', 'don.png'],  
+          ];  
+
+          //merge the data with CSV  
+          csvFileData.forEach(function(row) {  
+                    csv += row.join(',');  
+                    csv += "\n";  
+          });  
+
+
+          //display the created CSV data on the web browser   
+          document.write(csv);
+          alert("If you wish to update the list of people, delete previous resource.csv file, and replace it with the new one");  
+          
+               
+          var hiddenElement = document.createElement('a');  
+          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
+          hiddenElement.target = '_blank';  
+               
+          //provide the name for the CSV file to be downloaded  
+          hiddenElement.download = 'resource.csv';  
+          hiddenElement.click();  
+
+
+          }
+
+          </script>
+     </body>
+</html>

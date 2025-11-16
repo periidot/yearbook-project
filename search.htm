@@ -1,0 +1,73 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Yearbook</title>
+    <link href="style.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <div class="one" id="1">
+        <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> Search <img src="pics/spark.gif" alt="woaaw"></h1>
+    </div>
+
+    <div class="a_toc"><a href="toc.htm">ToC</a></div>
+
+    <div class="scroll3">
+        <input type="text" id="query" placeholder="Begin the search">
+        <button onclick="searcher()">Search</button>
+        <div id="people"></div>
+    </div>
+
+    <script>
+      let thing = [];
+      
+      Promise.all([
+          fetch('resource.csv').then(res => res.ok ? res.text() : ''),
+          fetch('test.csv').then(res => res.ok ? res.text() : '')
+      ])
+      .then(([res1, res2]) => {
+          const csvdata = res1 + '\n' + res2;
+          const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+          thing = lines.map(line => {
+              const cols = line.split(',');
+              return {
+                  id: cols[0]?.trim() || '',
+                  name: cols[1]?.trim() || '',
+                  dob: cols[2]?.replace(/"/g,'').trim() || '',
+                  clubs: cols[3]?.replace(/"/g,'').trim() || '',
+                  contact: cols[4]?.trim() || '',
+                  img: cols[5]?.trim() || ''
+              };
+          });
+      })
+      .catch(err => console.error('Error fetching CSVs:', err));
+      
+      function searcher() {
+          const query = document.getElementById('query').value.toLowerCase();
+          const container = document.getElementById('people');
+          container.innerHTML = '';
+      
+          const results = thing.filter(p => p.name.toLowerCase().includes(query));
+      
+          if (results.length === 0) {
+              container.innerHTML = '<p>Nothing is found</p>';
+              return;
+          }
+      
+          results.forEach(p => {
+              const card = document.createElement('div');
+              card.className = 'person-card';
+              card.innerHTML = `
+                  <img src="/pics/${p.img}">
+                  <h3>${p.name}</h3>
+                  <p>DoB: ${p.dob}</p>
+                  <p>Club: ${p.clubs || '-'}</p>
+                  <p>Contact: ${p.contact}</p>
+              `;
+              container.appendChild(card);
+          });
+      }
+    </script>
+</body>
+</html>
+
