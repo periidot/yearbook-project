@@ -3,6 +3,194 @@
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Interactive Yearbook</title>
+          <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+      </head>
+
+      <body class="scrollable">
+          <a href="/toc.htm"title="Go back"> <img src="/pics/left.png" class="a_toc"></a>
+          <div class="font-ui">
+               <img src="/pics/fsize.png" class="font-image" alt="Adjust the size of text">
+               
+               <div class="font-signs">
+                   <button class="sign-btn" onclick="changeFontSize(0.1)">+</button>
+                   <button class="sign-btn" onclick="changeFontSize(-0.1)">-</button>
+               </div>
+           </div>
+
+          <div class="book-wrapper">
+               <div class="two" id="2">
+                   <p>Table of Contents</p>
+                   <br>
+                   <!--<a href="/gander.htm" title="Everything in one place!"> Look around! </a><br>--->
+                   <a href="/mem.htm" title="Look at events, history, people"> Memories & Moments </a><br>
+                   <a href="/academics.htm" title="Your academic archive"> Academics </a><br>
+                   <a href="/comments.htm" title = "Your friends' and faculty's notes"> Notes & Quotes </a><br>
+                   <a href="/pictures.htm" title="Look at all media of the yearbook"> Pictures & Media </a><br>
+                   <a href="/update.htm" title="Upload something of your own!"> Update </a><br>
+               </div>
+           </div>
+
+           <div class="book-wrapper">
+               <div class="scroll3">
+                   <form action="/search.htm" method="GET">
+                       <input type="text" name="q" placeholder="Begin the search">
+                       <button type="submit">Search</button>
+                   </form>
+               </div>
+           </div>
+          
+          <div class="one" id="1">
+               <h1 class="idk"><img src="/pics/spark.gif" alt="woaaw"> Interactive Yearbook <img src="/pics/spark.gif" alt="woaaw"></h1>
+          </div>
+
+          <div class="right-page-content">
+               <form id="input1">
+                    Name: <input type="text" name="Name"><br>
+                    DoB: <input type="date" name="DoB"><br>
+                    Clubs: <input type="text" name="Clubs"><br>
+                    Contact: <input type="email" name="email"><br>
+                    Picture: <input type="file" accept=".png, .jpg, .webp"><br><br><br>
+                    Submit and update: <input type="file" name="file" id="file" accept=".csv" ><br>
+                    <input type="button" id="btnsubmit" value="Submit" onclick="readCSVFile();" >
+                    <input type="button" id="btnsubmit2" value="Download" onclick="writeCSVFile();" ><br>
+                    <input type="reset" value="Reset"><br>
+               </form>
+          </div>
+          <table id="tblcsvdata" class="right-page-table" border="1" style="border-collapse: collapse;">
+               <thead>
+                    <tr>
+                         <th>S.no</th>
+                         <th>Name</th>
+                         <th>DoB</th>
+                         <th>Clubs</th>
+                         <th>Contact</th>
+                         <th>Picture</th>
+                    </tr>
+               </thead>
+               <tbody>
+
+               </tbody>
+
+          </table>
+
+          <script type="text/javascript">
+          function readCSVFile(){
+               var files = document.querySelector('#file').files;
+               
+               if(files.length > 0 ){
+
+                    // Selected file
+                    var file = files[0];
+
+                    // FileReader Object
+                    var reader = new FileReader();
+
+                    // Read file as string 
+                    reader.readAsText(file);
+
+                    // Load event
+                    reader.onload = function(event) {
+
+                         // Read file data
+                         var csvdata = event.target.result;
+
+                         // Split by line break to gets rows Array
+                         var rowData = csvdata.split('\n');
+               alert(rowData);
+
+                         // <table > <tbody>
+                         var tbodyEl = document.getElementById('tblcsvdata').getElementsByTagName('tbody')[0];
+                         tbodyEl.innerHTML = rowData;
+
+                         // Loop on the row Array (change row=0 if you also want to read 1st row)
+                         for (var row = 1; row < rowData.length; row++) {
+
+                              // Insert a row at the end of table
+                              var newRow = tbodyEl.insertRow();
+
+                              // Split by comma (,) to get column Array
+                              rowColData = rowData[row].split(',');
+
+                              // Loop on the row column Array
+                              for (var col = 0; col < rowColData.length; col++) {
+
+                                   // Insert a cell at the end of the row
+                                   var newCell = newRow.insertCell();
+                                   newCell.innerHTML = rowColData[col];
+
+                              }
+
+                         }
+                    };
+
+               }else{
+                    alert("Please select a file.");
+               }
+
+          }
+
+          function writeCSVFile(){
+
+          //define the heading for each row of the data  
+          var csv = 'Name,Profession\n';  
+
+          //create CSV file data in an array  
+          var csvFileData = [  
+          ['Mila Milana', '2003-11-02', 'Music', 'mimi@gmail.com', 'mila.png'],  
+          ['Sofia Nimaevna', '2005-10-12', 'Photography', 'wewe@gmail.com', 'sofi.png'],  
+          ['Don Dorjiev', '2004-03-30', 'Theater', 'door@gmail.com', 'don.png'],  
+          ];  
+
+          //merge the data with CSV  
+          csvFileData.forEach(function(row) {  
+                    csv += row.join(',');  
+                    csv += "\n";  
+          });  
+
+
+          //display the created CSV data on the web browser   
+          document.write(csv);
+          alert("If you wish to update the list of people, delete previous resource.csv file, and replace it with the new one");  
+          
+               
+          var hiddenElement = document.createElement('a');  
+          hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
+          hiddenElement.target = '_blank';  
+               
+          //provide the name for the CSV file to be downloaded  
+          hiddenElement.download = '/resource.csv';  
+          hiddenElement.click();  
+
+
+          }
+
+          </script>
+        <div>
+          <img src="/pics/clanker.png" class="ai" onclick="openAI()" style="cursor:pointer;" title="Click for help!">
+      </div>
+      <div id="ai-overlay" class="overlay-hidden">
+          <div class="ai-modal">
+              <div class="ai-interaction-zone">
+                  <img src="/pics/clanker_neutral.png" id="clanker-display" class="ai-large">
+                  
+                  <div id="ai-options" class="options-vertical">
+                      </div>
+              </div>
+      
+              <div class="ai-dialogue">
+               <p id="ai-text">Hello, dear allumni! How could I assist you?</p>
+              </div>
+      
+              <button onclick="closeAI()" class="close-btn">Return to Book</button>
+          </div>
+      </div>
+          <script src="/script.js"></script>
+     </body>
+</html><html>
+     <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Interactive Yearbook</title>
           <link href="style.css" rel="stylesheet" type="text/css" media="all">
       </head>
 
