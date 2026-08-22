@@ -3,6 +3,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Yearbook</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body>
+    <div class="one" id="1">
+        <h1 class="idk"><img src="/pics/spark.gif" alt="woaaw"> Search <img src="/pics/spark.gif" alt="woaaw"></h1>
+    </div>
+
+    <a href="/toc.htm" title="Go back"> <img src="/pics/left.png" class="a_toc"></a>
+    <div class="font-ui">
+        <img src="/pics/fsize.png" class="font-image" alt="Adjust the size of text">
+        
+        <div class="font-signs">
+            <button class="sign-btn" onclick="changeFontSize(0.1)">+</button>
+            <button class="sign-btn" onclick="changeFontSize(-0.1)">-</button>
+        </div>
+    </div>
+
+    <div class="book-wrapper">
+        <div class="two" id="2">
+            <p>Table of Contents</p>
+            <br>
+            <!--<a href="/gander.htm" title="Everything in one place!"> Look around! </a><br>--->
+            <a href="/mem.htm" title="Look at events, history, people"> Memories & Moments </a><br>
+            <a href="/academics.htm" title="Your academic archive"> Academics </a><br>
+            <a href="/comments.htm" title = "Your friends' and faculty's notes"> Notes & Quotes </a><br>
+            <a href="/pictures.htm" title="Look at all media of the yearbook"> Pictures & Media </a><br>
+            <a href="/update.htm" title="Upload something of your own!"> Update </a><br>
+        </div>
+
+        <div class="scroll3">
+            <form action="/search.htm" method="GET">
+                <input type="text" name="q" id="query" placeholder="Begin the search">
+                <button type="submit">Search</button>
+            </form>
+            
+            <div id="people" class="search_results"></div>
+        </div>
+    </div>
+    
+    <script src="/script.js"></script>
+
+    <script>
+      let thing = [];
+      
+      Promise.all([
+          fetch('/resource.csv').then(res => res.ok ? res.text() : ''),
+          fetch('/test.csv').then(res => res.ok ? res.text() : '')
+      ])
+      .then(([res1, res2]) => {
+          const csvdata = res1 + '\n' + res2;
+          const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+          thing = lines.map(line => {
+              const cols = line.split(',');
+              return {
+                  id: cols[0]?.trim() || '',
+                  name: cols[1]?.trim() || '',
+                  dob: cols[2]?.replace(/"/g,'').trim() || '',
+                  clubs: cols[3]?.replace(/"/g,'').trim() || '',
+                  contact: cols[4]?.trim() || '',
+                  img: cols[5]?.trim() || ''
+              };
+          });
+      })
+      .catch(err => console.error('Error fetching CSVs:', err));
+      
+      function searcher() {
+          const query = document.getElementById('query').value.toLowerCase();
+          const container = document.getElementById('people');
+          container.innerHTML = '';
+      
+          const results = thing.filter(p => p.name.toLowerCase().includes(query));
+      
+          if (results.length === 0) {
+              container.innerHTML = '<br><br><br><p>Nothing is found</p>';
+              return;
+          }
+      
+          results.forEach(p => {
+              const card = document.createElement('div');
+              card.className = 'person-card';
+              card.innerHTML = `
+                  <img src="/pics/${p.img}">
+                  <h3>${p.name}</h3>
+                  <p>DoB: ${p.dob}</p>
+                  <p>Club: ${p.clubs || '-'}</p>
+                  <p>Contact: ${p.contact}</p>
+              `;
+              container.appendChild(card);
+          });
+      }
+    </script>
+        <div>
+            <img src="/pics/clanker.png" class="ai" onclick="openAI()" style="cursor:pointer;" title="Click for help!">
+        </div>
+        <div id="ai-overlay" class="overlay-hidden">
+            <div class="ai-modal">
+                <div class="ai-interaction-zone">
+                    <img src="/pics/clanker_neutral.png" id="clanker-display" class="ai-large">
+                    
+                    <div id="ai-options" class="options-vertical">
+                        </div>
+                </div>
+        
+                <div class="ai-dialogue">
+                    <p id="ai-text">Hello, dear allumni! How could I assist you?</p>
+                </div>
+        
+                <button onclick="closeAI()" class="close-btn">Return to Book</button>
+            </div>
+        </div>
+            <script src="/script.js"></script>
+</body>
+</html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Yearbook</title>
     <link href="style.css" rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
