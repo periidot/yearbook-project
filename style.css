@@ -2,12 +2,13 @@
 body {
     text-align: center;
     background-color: #1c2c57;
-    font-family:verdana;
-    background-image: url('pics/book1.png'), url('pics/rb.png'), url('pics/celstialsphr.png');
-    background-repeat: no-repeat, repeat-y, repeat-x;
-    background-position: center, center, center;
-    background-attachment: fixed, fixed, fixed;
-    background-size: 42% auto, contain, cover;
+    font-family:garamond;
+    font-weight: bold;
+    background-image: url('/pics/openb.webp'), url('/pics/crt.png'), url('/pics/lectern.webp'), url('/pics/celstialsphr.png');
+    background-repeat: no-repeat, repeat-y, no-repeat, repeat-x;
+    background-position: center, center, center, center;
+    background-attachment: fixed, fixed, fixed, fixed;
+    background-size: 52% auto, 100% 100%, 70% auto, cover;
     overflow-y: scroll;
      }
 
@@ -17,6 +18,9 @@ a {
     
 h1 {
       color: #ffcd29;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
     }
     
 h2 {
@@ -42,15 +46,16 @@ p {
     font-size: 100%;
     width: 100%;
     height: 100%;
-    position:fixed;
+    position:absolute;
 }
 
 .two {
-    font-size: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    font-size: 1.5vw;
+    top: 30%;
+    left: 10%;
+    width: 35%;
+    z-index: 121;
 }
 
 .scroll-box {
@@ -71,10 +76,67 @@ p {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 33%;
-    height: 40%;
     cursor: pointer;
-    z-index:99;
+    z-index:2;
+}
+
+.ai {
+    position: fixed;
+    bottom: 100px;
+    left: 78px;
+    width: 8%;
+    height: auto;
+}
+
+.a_toc {
+    position: fixed;
+    top: 240px;
+    left: 200px;
+    width: 9%;
+    height: auto;
+    z-index: 102;
+}
+
+.ev{
+    position: fixed;
+    top: 240px;
+    right: 270px;
+    width: 6.5%;
+    height: auto;  
+    z-index: 103;  
+}
+.hi{
+    position: fixed;
+    top: 380px;
+    right: 270px;
+    width: 6%;
+    height: auto;  
+    z-index: 103;  
+}
+.pe{
+    position: fixed;
+    top: 530px;
+    right: 270px;
+    width: 6%;
+    height: auto;  
+    z-index: 103;  
+}
+
+.pic{
+    position: fixed;
+    top: 240px;
+    right: 270px;
+    width: 6.5%;
+    height: auto;  
+    z-index: 103;  
+}
+.vid{
+    position: fixed;
+    top: 360px;
+    right: 270px;
+    width: 6%;
+    height: auto;  
+    z-index: 103;  
 }
 
 .buttons {
@@ -87,16 +149,16 @@ p {
     transform: translate(-50%, -50%);
     width: 15%;
     cursor: pointer; 
-    z-index: 99;  
+    z-index: 90;  
 }
 
 #tblcsvdata {
   color: #8cf3ff;
   position: fixed;
-  right: 30px;
+  right: 42px;
   top: 200px;
-  width: 30vw;
-  height: 200px; /*FIXED*/
+  width: 20vw;
+  height: 200px;
   border-collapse: collapse;
   text-align: center;
   font-size: 12px;
@@ -109,19 +171,6 @@ p {
 #tblcsvdata th, #tblcsvdata td {
     padding: 5px;
     border: 1px solid rgba(255,255,255,0.3);
-}
-
-.a_toc {
-    border: 6px solid #fff98a;
-    background: #fff98a;
-    width: 5%;
-    height: 3%;
-    position: fixed;
-    margin: 100px auto;
-    left: 24%;
-    top: 15%;
-    transform: translate(-50%, -50%);
-    z-index: 99;
 }
 
 .scroll2 {
@@ -138,15 +187,244 @@ p {
     }
     
 .scroll3 {
-    color: #980d3e;
-    position: fixed;
-    left: 49%;
-    top: 49%;
-    transform: translate(-50%, -50%);
-    font-size: 15px;
-    border: 3px solid rgba(0, 0, 0, 0.5);
-    width: 27%;
-    height: 40%;
-    padding: 15px;
-    overflow-y: scroll;
+    position: absolute;
+    right: 0;
+    top: 15%;
+    font-size: 1.2vw;
+    width: 35%;
+    z-index: 120;
     }
+
+.quote {
+    position: absolute;
+    right: 15%;
+    top: 33%;
+    width: 30%;
+}
+
+.search_results{
+    position: absolute;
+    right: 40%;
+    top: 240%;
+    width: 100%;
+    height: 660%;
+    overflow-y: auto;
+    font-size: 1vw;
+}
+
+.book-wrapper {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* center exactly like background-position: center */
+    width: 52vw;               
+    height: 100vh;
+    pointer-events: none;  
+    z-index: 200;
+}
+
+.book-wrapper > * {
+    pointer-events: auto;
+}
+
+.right-page-content {
+    position: absolute;
+    right: 28%;
+    top: 27%;
+    width: 20%;
+    height: 40%;         
+    overflow-y: auto;   
+    text-align: left;
+    padding: 10px;
+    z-index: 201;
+    pointer-events: auto;
+    scroll-behavior: smooth;
+}
+.right-page-table {
+    position: absolute;
+    right: 18%;
+    top: 27%;
+    width: 5%;        
+    overflow-y: auto;   
+    text-align: left;
+    padding: 10px;
+    z-index: 201;
+    pointer-events: auto;
+    scroll-behavior: smooth;
+}
+
+.notez {
+    position: absolute;
+    right: 8%;          
+    top: 27%;    
+    width: 40%; 
+    height: 40%;
+    overflow-y: auto;
+    text-align: left;
+    padding: 10px;
+    z-index: 201;
+    pointer-events: auto;
+}
+
+.comms {
+    position: absolute;
+    right: 8%;          
+    top: 27%;    
+    width: 40%; 
+    height: 40%;
+    overflow-y: auto;
+    text-align: left;
+    padding: 10px;
+    z-index: 201;
+    pointer-events: auto;
+}
+
+.dropdown summary {
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    color: #08285c;
+    list-style: none; 
+    border-bottom: 1px dashed #04695e;
+}
+
+.dropdown summary::before {
+    content: "▶ ";
+    font-size: 0.8em;
+}
+
+.dropdown[open] summary::before {
+    content: "▼ ";
+}
+
+.expanded-info {
+    padding: 10px;
+    background: rgba(255, 136, 0, 0.179);
+    font-size: 0.9vw;
+    line-height: 1.4;
+}
+
+
+
+:root {
+    --book-fs: 1.3vw; 
+}
+.two, .right-page-content, .scroll3, .search_results, a, p {
+    font-size: var(--book-fs) !important;
+}
+
+.font-ui {
+    position: fixed;
+    top: 360px;
+    left: 78px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 125;
+    pointer-events: auto;
+}
+
+.font-image {
+    height: 100px;
+    width: auto;
+}
+
+.font-signs {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sign-btn {
+    background: none;
+    border: none;
+    color: #ffcd29;
+    font-size: 33px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+.sign-btn:hover {
+    color: #a4002e;
+}
+
+#ai-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(5px); 
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.ai-modal {
+    background: #ecf0d148;
+    border: 5px solid #ffcd29;
+    padding: 30px;
+    width: 60%;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.ai-large {
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+#ai-options {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.ai-interaction-zone {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.options-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 200px; /*buttons with uniform width*/
+}
+
+.option-btn {
+    background: #04695e;
+    color: white;
+    border: 2px solid #ffcd29;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.9vw;
+}
+
+.option-btn:hover {
+    background: #a4002e;
+}
+
+.ai-dialogue {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid #04695e;
+    min-height: 80px;
+}
