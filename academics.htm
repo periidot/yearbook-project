@@ -3,32 +3,119 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Interactive Yearbook</title>
-        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <link href="/style.css" rel="stylesheet" type="text/css" media="all">
     </head>
 
     <body> 
         <div class="one" id="1">
-            <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> Academics <img src="pics/spark.gif" alt="woaaw"></h1>
+            <h1 class="idk"><img src="/pics/spark.gif" alt="woaaw"> Academics <img src="/pics/spark.gif" alt="woaaw"></h1>
+        </div>
+        <div class="font-ui">
+            <img src="/pics/fsize.png" class="font-image" alt="Adjust the size of text">
+            
+            <div class="font-signs">
+                <button class="sign-btn" onclick="changeFontSize(0.1)">+</button>
+                <button class="sign-btn" onclick="changeFontSize(-0.1)">-</button>
+            </div>
         </div>
 
-        <div class="a_toc"><a href="gander.htm"> ToC </a></div>
-            
-        <div class="scroll-box">
-            <p> Academic accomplishments and comments:
-            <br><br>
-            1. No F's three semesters in a row until graduation.
-            <br>
-            2. Highest jump out of all peers.
-            <br><br>
-            Congratulations.
-            <br>
-            -Principal
-            <br><br>
-            Update: Congratulations on entering college, im proud.<br>
-            -Principal
-            <br><br><br>
-            </p>
+        <a href="/toc.htm"title="Go back"> <img src="/pics/left.png" class="a_toc"></a>
+        <div class="book-wrapper">
+            <div class="two" id="2">
+                <p>Table of Contents</p>
+                <br>
+                <!--<a href="/gander.htm" title="Everything in one place!"> Look around! </a><br>--->
+                <a href="/mem.htm" title="Look at events, history, people"> Memories & Moments </a><br>
+                <a href="/academics.htm" title="Your academic archive"> Academics </a><br>
+                <a href="/comments.htm" title = "Your friends' and faculty's notes"> Notes & Quotes </a><br>
+                <a href="/pictures.htm" title="Look at all media of the yearbook"> Pictures & Media </a><br>
+                <a href="/update.htm" title="Upload something of your own!"> Update </a><br>
+            </div>
         </div>
+
+        <div class="book-wrapper">
+            <div class="scroll3">
+                <form action="/search.htm" method="GET">
+                    <input type="text" name="q" placeholder="Begin the search">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="comms">                
+                <h3>Your academic performance<h3><hr>
+                <details class="dropdown">
+                    <summary>Mathematics</summary>
+                    <div class="expand">
+                        <p>Grade: A-</p>
+                        <p>Performance: Top 20% of Class-A</p>
+                        <p>Notes: Nice </p>
+                    </div>
+                </details>
+                <details class="dropdown">
+                    <summary>Linguistics</summary>
+                    <div class="expand">
+                        <p>Grade: B</p>
+                        <p>Performance: 50% of Class-A</p>
+                        <p>Notes: Sufficient knowledge of grammar and expressions </p>
+                    </div>
+                </details>
+                <details class="dropdown">
+                    <summary>Science</summary>
+                    <div class="expand">
+                        <p>Grade: B+</p>
+                        <p>Performance: Top 30% of Class-A</p>
+                        <p>Notes: Strong suit in biology. Chemistry... not so much </p>
+                    </div>
+                </details>
+                <details class="dropdown">
+                    <summary>Humanities</summary>
+                    <div class="expand">
+                        <p>Grade: B+</p>
+                        <p>Performance: Top 30% of Class-A</p>
+                        <p>Notes: Slept all years throughout history... Rest are fine </p>
+                    </div>
+                </details>
+                <details class="dropdown">
+                    <summary>Physical Education</summary>
+                    <div class="expand">
+                        <p>Grade: C+</p>
+                        <p>Performance: Top 5% of Class-A</p>
+                        <p>Notes: Spent too much in the bathroom for "reasons" </p>
+                    </div>
+                </details>
+                <br>
+                <hr>
+                <h3>Your academic acomplishments</h3>
+                <br>
+                <p>★ No F's three semesters in a row until graduation!</p>
+                <p>★ Highest jump out of all peers!</p>
+                <p>Congratulations.</p>
+                <p>-Principal</p><br>
+                <p>Update: Congratulations on entering college, im proud.</p>
+                <p>-Principal</p>
+                <hr> 
+            </div>
+        </div>
+
+        <div>
+            <img src="/pics/clanker.png" class="ai" onclick="openAI()" style="cursor:pointer;" title="Click for help!">
+        </div>
+        <div id="ai-overlay" class="overlay-hidden">
+            <div class="ai-modal">
+                <div class="ai-interaction-zone">
+                    <img src="/pics/clanker_neutral.png" id="clanker-display" class="ai-large">
+                    
+                    <div id="ai-options" class="options-vertical">
+                        </div>
+                </div>
+        
+                <div class="ai-dialogue">
+                    <p id="ai-text">Hello, dear allumni! How could I assist you?</p>
+                </div>
+        
+                <button onclick="closeAI()" class="close-btn">Return to Book</button>
+            </div>
+        </div>
+        <script src="/script.js"></script>
     </body>        
 
 </html>
