@@ -3,6 +3,144 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Interactive Yearbook</title>
+        <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+        
+        <style>
+            #box {
+                margin-bottom: 20px;
+            }
+            #comin {
+                width: 78%;
+                height: 60px;
+            }
+            #list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .postit {
+                background: #d0f5f2; /*post-it note*/
+                width: 100px;
+                min-height: 120px;
+                max-height: 120px;
+                overflow-y: auto;
+                word-wrap: break-word;
+                font-size: 14px;
+                position: relative;
+                overflow-y: auto;
+                font-size: 15px;
+            }
+        </style>
+    </head>
+
+    <body>  
+        <div class="one" id="1">
+            <h1 class="idk"> <img src="/pics/spark.gif" alt="woaaw"> Comments <img src="/pics/spark.gif" alt="woaaw"> </h1>
+        </div>
+        <div class="font-ui">
+            <img src="/pics/fsize.png" class="font-image" alt="Adjust the size of text">
+            
+            <div class="font-signs">
+                <button class="sign-btn" onclick="changeFontSize(0.1)">+</button>
+                <button class="sign-btn" onclick="changeFontSize(-0.1)">-</button>
+            </div>
+        </div>
+
+        <a href="/toc.htm"title="Go back"> <img src="/pics/left.png" class="a_toc"></a>
+        
+        <div class="book-wrapper">
+            <div class="two" id="2">
+                <p>Table of Contents</p>
+                <br>
+                <!--<a href="/gander.htm" title="Everything in one place!"> Look around! </a><br>--->
+                <a href="/mem.htm" title="Look at events, history, people"> Memories & Moments </a><br>
+                <a href="/academics.htm" title="Your academic archive"> Academics </a><br>
+                <a href="/comments.htm" title = "Your friends' and faculty's notes"> Notes & Quotes </a><br>
+                <a href="/pictures.htm" title="Look at all media of the yearbook"> Pictures & Media </a><br>
+                <a href="/update.htm" title="Upload something of your own!"> Update </a><br>
+            </div>
+
+            <div class="notez">
+                <div id="box">
+                    <textarea id="comin" placeholder="Speak to the Void..."></textarea>
+                    <button onclick="Comment()">Post it</button>
+                </div>
+                <hr>
+                <div id="list"></div>
+            </div>
+
+        </div>
+
+        <div class="book-wrapper">
+            <div class="scroll3">
+                <form action="/search.htm" method="GET">
+                    <input type="text" name="q" placeholder="Begin the search">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="scroll3">
+            <div id="list"></div>
+            <script>
+                const comments = [
+                    {name: "Mila", text: "They revamped school right after we graduated guys"},
+                    {name: "Don", text: "Can’t believe its been a year. oof"},
+                    {name: "Sofia", text: "Lets hang out! I miss you"},
+                ];
+
+                function renderComments() {
+                    const container = document.getElementById('list');
+                    container.innerHTML = '';
+                    comments.forEach(c => {
+                        const div = document.createElement('div');
+                        div.className = 'postit';
+                        div.innerHTML = `<h4>${c.name}</h4>${c.text}`;
+                        container.appendChild(div);
+                    });}
+
+                renderComments();
+
+                function Comment() {
+                    const input = document.getElementById('comin');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    comments.push({name: "You", text});
+                    renderComments();
+                    input.value = '';
+                }
+            </script>
+        </div>
+
+        <div>
+            <img src="/pics/clanker.png" class="ai" onclick="openAI()" style="cursor:pointer;" title="Click for help!">
+        </div>
+        <div id="ai-overlay" class="overlay-hidden">
+            <div class="ai-modal">
+                <div class="ai-interaction-zone">
+                    <img src="/pics/clanker_neutral.png" id="clanker-display" class="ai-large">
+                    
+                    <div id="ai-options" class="options-vertical">
+                        </div>
+                </div>
+        
+                <div class="ai-dialogue">
+                    <p id="ai-text">Hello, dear allumni! How could I assist you?</p>
+                </div>
+        
+                <button onclick="closeAI()" class="close-btn">Return to Book</button>
+            </div>
+        </div>
+        <script src="/script.js"></script>
+    </body>        
+</html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Yearbook</title>
         <link href="style.css" rel="stylesheet" type="text/css" media="all">
         
         <style>
