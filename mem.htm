@@ -3,51 +3,188 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Interactive Yearbook</title>
-        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <link href="/style.css" rel="stylesheet" type="text/css" media="all">
     </head>
 
     <body> 
         <div class="one" id="1">
-            <h1 class="idk"><img src="pics/spark.gif" alt="woaaw"> Memorabilia <img src="pics/spark.gif" alt="woaaw"></h1>
+            <h1 class="idk"><img src="/pics/spark.gif" alt="woaaw"> Memorabilia <img src="/pics/spark.gif" alt="woaaw"></h1>
         </div>
 
-        <div class="a_toc"><a href="toc.htm"> ToC </a></div>
-        
-        <div class="scroll3">
-        <div id="people"></div>
-        <script type="text/javascript">
-          fetch('test.csv') 
-                  .then(response => response.text())
-                  .then(csvdata => {
-                      const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
-                      const container = document.getElementById('people');
-  
-                      lines.forEach(line => {
-                          const cols = line.split(',');
-                          if (cols.length < 6) return;
-  
-                          const id = cols[0].trim();
-                          const name = cols[1].trim();
-                          const dob = cols[2].replace(/"/g,'').trim();
-                          const clubs = cols[3].replace(/"/g,'').trim();
-                          const contact = cols[4].trim();
-                          const img = cols[5].trim();
-  
-                          const card = document.createElement('div');
-                          card.className = 'person-card';
-                          card.innerHTML = `
-                              <img src="pics/${img}">
-                              <h3>${name}</h3>
-                              <p>Date: ${dob}</p>
-                              <p>${clubs || '—'}</p>
-                              <p>${contact}</p>
-                              <br>
-                          `;
-                          container.appendChild(card); });
-                  })
-                  .catch(err => console.error('There is no test file, ', err));
-        </script>
+        <a href="/toc.htm"title="Go back"> <img src="/pics/left.png" class="a_toc"></a>
+        <div class="font-ui">
+            <img src="/pics/fsize.png" class="font-image" alt="Adjust the size of text">
+            
+            <div class="font-signs">
+                <button class="sign-btn" onclick="changeFontSize(0.1)">+</button>
+                <button class="sign-btn" onclick="changeFontSize(-0.1)">-</button>
+            </div>
         </div>
+        <div class="book-wrapper">
+            <div class="two" id="2">
+                <p>Table of Contents</p>
+                <br>
+                <!--<a href="/gander.htm" title="Everything in one place!"> Look around! </a><br>--->
+                <a href="/mem.htm" title="Look at events, history, people"> Memories & Moments </a><br>
+                <a href="/academics.htm" title="Your academic archive"> Academics </a><br>
+                <a href="/comments.htm" title = "Your friends' and faculty's notes"> Notes & Quotes </a><br>
+                <a href="/pictures.htm" title="Look at all media of the yearbook"> Pictures & Media </a><br>
+                <a href="/update.htm" title="Upload something of your own!"> Update </a><br>
+            </div>
+        </div>
+
+        <div class="book-wrapper">
+            <div class="scroll3">
+                <form action="/search.htm" method="GET">
+                    <input type="text" name="q" placeholder="Begin the search">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-page-content">
+                <nav class="shortcut-menu">
+                    <a href="#events"><img src="/pics/events.png" class="ev"></a>  <h3>Recall your memories here</h3>
+                    <a href="#history"><img src="/pics/hour.png" class="hi"></a>  
+                    <a href="#people"><img src="/pics/ppl.png" class="pe"></a>
+                </nav>
+
+            <div id="events">
+                <br><br>
+                <hr>
+                <h3>EVENTS</h3>
+                <hr>
+            <script type="text/javascript">
+            fetch('/test.csv') 
+                    .then(response => response.text())
+                    .then(csvdata => {
+                        const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+                        const container = document.getElementById('events');
+    
+                        lines.forEach(line => {
+                            const cols = line.split(',');
+                            if (cols.length < 6) return;
+    
+                            const id = cols[0].trim();
+                            const name = cols[1].trim();
+                            const dob = cols[2].replace(/"/g,'').trim();
+                            const clubs = cols[3].replace(/"/g,'').trim();
+                            const contact = cols[4].trim();
+                            const img = cols[5].trim();
+    
+                            const card = document.createElement('div');
+                            card.className = 'person-card';
+                            card.innerHTML = `
+                                <img src="/pics/${img}">
+                                <h3>${name}</h3>
+                                <p>Date: ${dob}</p>
+                                <p>${clubs || '—'}</p>
+                                <p>${contact}</p>
+                                <br>
+                            `;
+                            container.appendChild(card); });
+                    })
+                    .catch(err => console.error('There is no test file, ', err));
+            </script>
+            </div>
+            <br><br><br>
+
+            <div id="history">
+                <hr>
+                <h3>HISTORY</h3>
+                <hr>
+            <script type="text/javascript">
+                fetch('/pics.csv') 
+                .then(response => response.text())
+                .then(csvdata => {
+                  const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+                  const container = document.getElementById('history');
+      
+                  const entries = lines.map(line => {
+                    const [name, img] = line.split(',').map(x => x.trim());
+                    return { name, img };
+                  });
+      
+                  const filtered = entries.filter(e =>
+                    ['before.png', 'after.png'].includes(e.img)
+                  );
+      
+                  filtered.forEach(({ name, img }) => {
+                    const card = document.createElement('div');
+                    card.className = 'person-card';
+                    card.innerHTML = `
+                      <br><br>
+                      <img src="/pics/${img}" alt="${name}"><br>
+                      <h3>${name}</h3>
+                      <br><br>
+                    `;
+                    container.appendChild(card);
+                  });
+                })
+                .catch(err => console.error('There is no pics csv file:', err));
+            </script>
+            </div>
+
+            <br><br><br>
+
+            <div id="people">
+                <hr>
+                <h3>PEOPLE</h3>
+                <hr>
+            <script type="text/javascript">
+            fetch('/resource.csv') 
+                    .then(response => response.text())
+                    .then(csvdata => {
+                        const lines = csvdata.split('\n').map(line => line.trim()).filter(Boolean);
+                        const container = document.getElementById('people');
+
+                        lines.forEach(line => {
+                            const cols = line.split(',');
+                            if (cols.length < 6) return;
+
+                            const id = cols[0].trim();
+                            const name = cols[1].trim();
+                            const dob = cols[2].replace(/"/g,'').trim();
+                            const clubs = cols[3].replace(/"/g,'').trim();
+                            const contact = cols[4].trim();
+                            const img = cols[5].trim();
+
+                            const card = document.createElement('div');
+                            card.className = 'person-card';
+                            card.innerHTML = `
+                                <img src="/pics/${img}">
+                                <h3>${name}</h3>
+                                <p>DoB: ${dob}</p>
+                                <p>Club: ${clubs || '-'}</p>
+                                <p>Contact: ${contact}</p>
+                                <br>
+                            `;
+                            container.appendChild(card); });
+                    })
+                    .catch(err => console.error('There is no resource file, ', err));
+            </script>
+            </div>
+    </div>
+    <div>
+        <img src="/pics/clanker.png" class="ai" onclick="openAI()" style="cursor:pointer;" title="Click for help!">
+    </div>
+    <div id="ai-overlay" class="overlay-hidden">
+        <div class="ai-modal">
+            <div class="ai-interaction-zone">
+                <img src="/pics/clanker_neutral.png" id="clanker-display" class="ai-large">
+                
+                <div id="ai-options" class="options-vertical">
+                    </div>
+            </div>
+    
+            <div id="ai-text"> class="ai-dialogue">
+                <p id="ai-text">Hello, dear allumni! How could I assist you?</p>
+            </div>
+    
+            <button onclick="closeAI()" class="close-btn">Return to Book</button>
+        </div>
+    </div>
+        <script src="/script.js"></script>
     </body>        
 
 </html>
